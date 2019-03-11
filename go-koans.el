@@ -12,7 +12,9 @@
   (when (string-match "\\(about_[A-Za-z0-9_]*.go\\):\\([0-9]+\\)" output)
 
     (let
-        ((line (string-to-int (match-string 2 output)))
+        ((line (if (fboundp 'string-to-number)
+                   (string-to-number (match-string 2 output))
+                   (string-to-int (match-string 2 output))))
          (file (expand-file-name (match-string 1 output))))
 
       (find-file (expand-file-name file))
